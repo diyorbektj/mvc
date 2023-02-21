@@ -19,11 +19,12 @@ abstract  class DBConnection
 
     public static function connect(): void
     {
+        $database = config("database.mysql");
         try {
             self::$pdo = new PDO(
-                'mysql:host=' . env("DB_HOST") . ';dbname=' . env("DB_DATABASE"),
-                env("DB_USERNAME"),
-                env("DB_PASSWORD"),
+                'mysql:host=' . $database['host'] . ';dbname=' . $database['database'],
+                $database['username'],
+                $database['password'],
             );
         } catch (PDOException $e) {
             die($e->getMessage());

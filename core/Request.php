@@ -3,7 +3,7 @@
 namespace Core;
 
 class Request {
-    private $data = array();
+    protected array $data;
 
     public function __construct() {
         $this->data = array_merge($_GET, $_POST);
@@ -13,7 +13,9 @@ class Request {
         return $this->data[$key] ?? null;
     }
 
-    public function set($key, $value) {
+    public function set($key, $value): static
+    {
         $this->data[$key] = $value;
+        return $this;
     }
 }

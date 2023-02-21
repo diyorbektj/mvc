@@ -17,9 +17,13 @@ function json($data, $statusCode=200)
 
 function config($config)
 {
-    $data = explode(".", $config);
-    $test = include(__DIR__ . '/../config/' .$data[0].'.php');
-    return $test[$data[1]];
+    if($data = explode(".", $config)){
+        $test = include(__DIR__ . '/../config/' .$data[0].'.php');
+        return $test[$data[1]];
+    }else{
+        return include(__DIR__ . '/../config/' .$config.'.php');
+    }
+
 }
 
 function env($param, $default=null)
