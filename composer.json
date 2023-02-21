@@ -1,0 +1,32 @@
+{
+  "name": "vendor_name/untitled",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "diyorbek",
+      "email": "diyorbek5300@gmail.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^7.5",
+    "predis/predis": "^2.1",
+    "symfony/dotenv": "^6.2",
+    "ext-pdo": "*",
+    "nesbot/carbon": "^2.66"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Core\\": "core/"
+    },
+    "files": [
+      "core/Helpers.php",
+      "router/web.php"
+    ]
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^6.2"
+  }
+}
