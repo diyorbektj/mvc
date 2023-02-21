@@ -3,20 +3,17 @@
 namespace Core;
 
 class Request {
-    private array $data;
+    private $data = array();
 
     public function __construct() {
-//        $this->data = array_merge($_GET, $_POST, (array)file_get_contents('php://input'));
+        $this->data = array_merge($_GET, $_POST);
     }
 
     public function get($key) {
-        return $this->data[$key] ?? file_get_contents('php://input');
-//       return json_decode(file_get_contents('php://input'), );
-//        $data = json_decode(file_get_contents("php://input"), true);
-//        return $data->do;
+        return $this->data[$key] ?? null;
     }
 
     public function set($key, $value) {
-        return $this->data[$key] = $value;
+        $this->data[$key] = $value;
     }
 }
