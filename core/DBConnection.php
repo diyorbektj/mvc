@@ -25,6 +25,7 @@ abstract  class DBConnection
                 'mysql:host=' . $database['host'] . ';dbname=' . $database['database'],
                 $database['username'],
                 $database['password'],
+                $database['options']
             );
         } catch (PDOException $e) {
             die($e->getMessage());

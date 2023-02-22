@@ -13,13 +13,13 @@ Router::post("/req", function (){
 //    dd((new \App\Models\Posts)->where('id', '>', 1)->where('id', '<', 10)->get());
 });
 Router::get("/posts/{id}", function ($id){
-//    dd((new \App\Models\Posts)->where('id', '=', $id)->get());
-    dd((new Posts())->insert([
-        'title' => "test od mvc 2",
-        'description' => "test test test 2 121",
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]));
+    dd(Posts::query()->find($id));
+//    dd((new Posts())->insert([
+//        'title' => "test od mvc 2",
+//        'description' => "test test test 2 121",
+//        'created_at' => Carbon::now(),
+//        'updated_at' => Carbon::now(),
+//    ]));
 //    dd((new Posts)->where('id', '=', $id)->first());
 });
 

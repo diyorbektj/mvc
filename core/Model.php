@@ -27,6 +27,17 @@ abstract class Model extends DBConnection {
         $stmt->execute($this->params);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public static function query(): static
+    {
+        return (new static());
+    }
+    public function find(int $id) {
+
+        $sql ="SELECT $this->columns FROM  $this->table where `id`= $id";
+        $stmt = parent::$pdo->prepare($sql);
+        $stmt->execute($this->params);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     public function get() {
         $sql = "";
         $sql .='SELECT '.$this->columns .' FROM '.$this->table;
@@ -43,7 +54,7 @@ abstract class Model extends DBConnection {
         $placeholders = implode(',', array_fill(0, count($values), '?'));
         $stmt = parent::$pdo->prepare("INSERT INTO {$this->table} (" . implode(',', $keys) . ") VALUES ($placeholders)");
         $stmt->execute($values);
-        return $this->where('id', '=', parent::$pdo->lastInsertId())->first();
+        return $this->find(parent::$pdo->lastInsertId());
     }
 
     public function update($data) {
