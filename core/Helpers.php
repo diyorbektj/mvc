@@ -7,12 +7,12 @@ use Symfony\Component\Dotenv\Dotenv;
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__ . '/../.env');
 
-#[NoReturn] function json($data, $statusCode=200): void
+function json($data, $statusCode=200)
 {
     header('Content-Type: application/json');
     header(sprintf('HTTP/1.1 %s', $statusCode));
     echo json_encode($data);
-    exit();
+    return 1;
 }
 
 function config($config)

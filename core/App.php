@@ -6,7 +6,8 @@ class App {
 
     public function run()
     {
-        $routes = Router::allRoutes();
+        $routes = (new Router)->allRoutes();
+
         if (array_key_exists($_SERVER['REQUEST_URI'], $routes)){
 
         }else{

@@ -4,53 +4,53 @@ namespace Core;
 
 class Router
 {
-    private static array $routes;
-    private static string $route;
+    private array $routes;
+    private string $route;
 
     public static function get($route, $action): void
     {
-        self::addRoute($route, $action, "GET");
+        (new static())->addRoute($route, $action, "GET");
     }
     public static function post($route, $action): void
     {
-        self::addRoute($route, $action, "POST");
+        (new static())->addRoute($route, $action, "POST");
     }
     public static function put($route, $action): void
     {
-        self::addRoute($route, $action, "PUT");
+        (new static())->addRoute($route, $action, "PUT");
     }
     public static function patch($route, $action): void
     {
-        self::addRoute($route, $action, "PATCH");
+        (new static())->addRoute($route, $action, "PATCH");
     }
     public static function head($route, $action): void
     {
-        self::addRoute($route, $action, "HEAD");
+        (new static())->addRoute($route, $action, "HEAD");
     }
     public static function delete($route, $action): void
     {
-        self::addRoute($route, $action, "DELETE");
+        (new static())->addRoute($route, $action, "DELETE");
     }
 
     public static function options($route, $action): void
     {
-        self::addRoute($route, $action, "OPTIONS");
+        (new static())->addRoute($route, $action, "OPTIONS");
     }
-    public static function addRoute($route, $action, $method): void
+    public function addRoute($route, $action, $method): void
     {
-        self::$routes[$route] = $action;
-        self::dispatch($_SERVER["REQUEST_URI"], $method);
+        $this->routes[$route] = $action;
+       $this->dispatch($_SERVER["REQUEST_URI"], $method);
     }
-    public static function dispatch($url, $method): void
+    public function dispatch($url, $method): void
     {
         $query = parse_url($url, PHP_URL_QUERY);
         $params = [];
         if($query !== null) parse_str($query, $params);
         $path = parse_url($url, PHP_URL_PATH);
-        foreach (self::$routes as $route => $action) {
+        foreach ($this->routes as $route => $action) {
             if (preg_match(self::pattern($route), $path, $data) and $_SERVER['REQUEST_METHOD'] == $method) {
                 $matches = self::wildcards($data);
-                self::$route = $path;
+                $this->route = $path;
                 if (is_array($action)) {
                     $controller = new $action[0]();
                     call_user_func_array([$controller, $action[1]], $matches);
@@ -74,17 +74,17 @@ class Router
     {
         return "#^/?" . preg_replace("#/{([^/]+)}#", "/(?<$1>[^/]+)", $url) . "/?$#";
     }
-    public static function allRoutes(): array
+    public function allRoutes(): array
     {
-        return self::$routes;
+        return $this->routes;
     }
 
     /**
      * @return string
      */
-    public static function getRoute(): string
+    public function getRoute(): string
     {
-        return self::$route;
+        return $this->route;
     }
 
     /**

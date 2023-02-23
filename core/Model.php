@@ -31,6 +31,11 @@ abstract class Model extends DBConnection {
     {
         return (new static());
     }
+
+    public static function all()
+    {
+        return (new static())->get();
+    }
     public function find(int $id) {
 
         $sql ="SELECT $this->columns FROM  $this->table where `id`= $id";
@@ -63,15 +68,22 @@ abstract class Model extends DBConnection {
         foreach ($data as $key => $value) {
             $set[] = "$key = ?";
         }
-
-        $stmt = parent::$pdo->prepare("UPDATE {$this->table} SET " . implode(',', $set));
+        $sql = "UPDATE {$this->table} SET " . implode(',', $set);
+        if (!empty($this->where)) {
+            $sql .= " WHERE " . implode(' AND ', $this->where);
+        }
+        $stmt = parent::$pdo->prepare($sql);
 
         return $stmt->execute(array_values($data));
     }
 
-    public function delete($id) {
-        $stmt = parent::$pdo->prepare("DELETE FROM {$this->table} WHERE id = ?");
+    public function delete() {
+        $sql = "DELETE FROM {$this->table}";
+        if (!empty($this->where)) {
+            $sql .= " WHERE " . implode(' AND ', $this->where);
+        }
+        $stmt = parent::$pdo->prepare($sql);
 
-        return $stmt->execute([$id]);
+        return $stmt->execute();
     }
 }
