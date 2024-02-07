@@ -11,7 +11,8 @@ abstract class Model extends DBConnection {
     private $params = [];
 
 
-    public function where($column, $operator, $value) {
+    public function where($column, $operator, $value): static
+    {
         $this->where[] = "$column $operator '$value'";
 //        $this->params[] = $value;
         return $this;
