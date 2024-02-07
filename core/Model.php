@@ -3,7 +3,7 @@
 namespace Core;
 
 use PDO;
-
+//please refactoring this class
 abstract class Model extends DBConnection {
     protected string $table;
     private $columns = '*';
