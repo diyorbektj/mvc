@@ -10,7 +10,7 @@ abstract  class DBConnection
 {
     protected static $pdo;
 
-    function __construct()
+    public function __construct()
     {
         if (empty(self::$pdo)) {
             self::connect();

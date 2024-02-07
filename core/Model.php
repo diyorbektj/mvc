@@ -3,7 +3,7 @@
 namespace Core;
 
 use PDO;
-
+//please refactoring this class
 abstract class Model extends DBConnection {
     protected string $table;
     private $columns = '*';
@@ -11,7 +11,8 @@ abstract class Model extends DBConnection {
     private $params = [];
 
 
-    public function where($column, $operator, $value) {
+    public function where($column, $operator, $value): static
+    {
         $this->where[] = "$column $operator '$value'";
 //        $this->params[] = $value;
         return $this;
